@@ -45,5 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: -203655887218126122, guid: 2981846d94c99cc4f9593531e88429e1, type: 3}
+  clipSpeed: 1
   data: {fileID: 11400000, guid: 4b86655f6ee402943b35df98ff663398, type: 2}
   InUse: 0
+  hitParticle: {fileID: 198311007249550740, guid: 0b76d277096f4dc4fad0065918f5c9d3, type: 3}

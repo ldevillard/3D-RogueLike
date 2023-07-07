@@ -7,5 +7,5 @@ public class CapacityData : ScriptableObject
 {
     public float cooldown;
     public float duration;
-    public float damage;
+    public int damage;
 }
