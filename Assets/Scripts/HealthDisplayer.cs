@@ -4,18 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class HealthDisplayer : MonoBehaviour
 {
-    public TextMeshPro healthText;
-    public Image fill;
-    [SerializeField] GameObject preview;
+    [SerializeField] Image fill;
     [SerializeField] Entity entity;
-
-    [SerializeField] private Transform _pivot;
-
-    public bool avoidActiveAtLeastOnce = false;
-    bool wasActivatedAtLeastOnce;
+    [SerializeField] CanvasGroup preview;
 
     private void Start()
     {
@@ -25,36 +20,54 @@ public class HealthDisplayer : MonoBehaviour
     private void Init()
     {
         entity.OnHealthChanged += HandleHealthChange;
-
-        HandleHealthChange(entity.Health, entity.Health);
-        healthText.gameObject.SetActive(false);
+        entity.OnDie += HandleDie;
+        fill.fillAmount = 1;
     }
 
     private void OnDestroy()
     {
         entity.OnHealthChanged -= HandleHealthChange;
+        entity.OnDie -= HandleDie;
+
+        if (fill != null)
+            fill.DOKill();
     }
 
     private void HandleHealthChange(int oldHealth, int newHealth)
     {
-        if (!preview.activeSelf && newHealth < entity.MaxHealth) { preview.SetActive(true); if (!avoidActiveAtLeastOnce) wasActivatedAtLeastOnce = true; }
-        else if (preview.activeSelf && newHealth >= entity.MaxHealth && !wasActivatedAtLeastOnce) preview.SetActive(false);
-        // fill.fillAmount = newHealth / entity.MaxHealth;
-        _pivot.transform.localScale = _pivot.transform.localScale.SetX(newHealth / entity.MaxHealth);
+        fill.DOKill();
 
-        healthText.text = (Mathf.CeilToInt(newHealth)).ToString();
+        float newHealthPct = (float)newHealth / entity.MaxHealth;
+        if (newHealthPct > 0.5f)
+        {
+            // Green to yellow
+            fill.color = Color.Lerp(Color.green, Color.yellow, (1f - newHealthPct) * 2);
+        }
+        else
+        {
+            // Yellow to red
+            fill.color = Color.Lerp(Color.yellow, Color.red, (0.5f - newHealthPct) * 2);
+        }
 
+        fill.DOFillAmount(newHealthPct, 0.2f).SetEase(Ease.OutBack);
     }
 
-    public void Show()
+    void HandleDie()
     {
-        preview.transform.DOKill();
-        preview.transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
+        Hide(() => Destroy(gameObject));
     }
 
-    public void Hide()
+    public void Show(Action onComplete = null)
     {
-        preview.transform.DOKill();
-        preview.transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.InBack);
+        preview.DOKill();
+        preview.DOFade(1, 0.25f)
+        .OnComplete(() => onComplete?.Invoke());
+    }
+
+    public void Hide(Action onComplete = null)
+    {
+        preview.DOKill();
+        preview.DOFade(0, 0.25f)
+        .OnComplete(() => onComplete?.Invoke());
     }
 }
