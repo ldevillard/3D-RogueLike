@@ -8,18 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Trunk
-  m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
+  m_Shader: {fileID: 4800000, guid: 849dc4ff793a3f943ad21a3b6ee26456, type: 3}
   m_ValidKeywords:
+  - _ADDITIONAL_LIGHTS_ENABLED
+  - _ENVIRONMENT_LIGHTING_ENABLED
+  - _FOG
+  - _SPECULAR
+  m_InvalidKeywords:
+  - DR_SPECULAR_ON
   - _CELPRIMARYMODE_SINGLE
   - _TEXTUREBLENDINGMODE_MULTIPLY
-  m_InvalidKeywords:
   - _UNITYSHADOWMODE_NONE
+  - _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - SRPDEFAULTUNLIT
   m_SavedProperties:
@@ -73,6 +78,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RampMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -91,7 +100,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AdditionalLights: 1
+    - _AdditionalLightsSpecular: 0
     - _AlphaClip: 0
+    - _AnisoSpecular: 0
     - _Blend: 0
     - _BumpScale: 1
     - _CameraDistanceImpact: 0
@@ -105,14 +117,20 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Emission: 0
+    - _EnvironmentLightingEnabled: 1
     - _EnvironmentReflections: 1
     - _FlatRimEdgeSmoothness: 0.5
     - _FlatRimLightAlign: 0
     - _FlatRimSize: 0.5
-    - _FlatSpecularEdgeSmoothness: 0
-    - _FlatSpecularSize: 0.1
+    - _FlatSpecularEdgeSmoothness: 0.832
+    - _FlatSpecularSize: 0.622
     - _Flatness: 1
     - _FlatnessExtra: 1
+    - _Fog: 1
+    - _Fresnel: 0
+    - _FresnelSmoothness: 0.1
+    - _FresnelThickness: 0.45
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -133,17 +151,31 @@ Material:
     - _OutlineWidth: 1
     - _OverrideLightmapDir: 0
     - _Parallax: 0.005
+    - _PureShadowColor: 0
     - _QueueOffset: 0
+    - _Ramp0: 0.06
+    - _Ramp1: 0.5
+    - _RampSmoothness: 0.005
+    - _RampTriple: 0
     - _ReceiveShadows: 1
+    - _ReflectionBlend: 0.5
+    - _ReflectionProbes: 0
+    - _ReflectionSmoothness: 0.5
+    - _Reflections: 0
     - _RimEnabled: 0
     - _SelfShadingSize: 0.5
     - _SelfShadingSizeExtra: 0.6
     - _ShadowEdgeSize: 0.05
     - _ShadowEdgeSizeExtra: 0.05
+    - _ShadowMask: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
-    - _SpecularEnabled: 0
+    - _Specular: 1
+    - _SpecularEnabled: 1
+    - _SpecularExponent: 5
     - _SpecularHighlights: 1
+    - _SpecularSmoothness: 0.076
+    - _SpecularThreshold: 0.792
     - _SrcBlend: 1
     - _Surface: 0
     - _TextureBlendingMode: 0
@@ -152,6 +184,8 @@ Material:
     - _UnityShadowOcclusion: 0
     - _UnityShadowPower: 0.2
     - _UnityShadowSharpness: 1
+    - _UseRampMap: 0
+    - _VertexColor: 0
     - _VertexColorsEnabled: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
@@ -165,10 +199,13 @@ Material:
     - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatRimColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
-    - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
+    - _FlatSpecularColor: {r: 0.44339618, g: 0.20705763, b: 0.20705763, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowTint: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecularColor: {r: 0.13207549, g: 0.03675686, b: 0.03675686, a: 1}
     - _UnityShadowColor: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
   m_BuildTextureStacks: []
 --- !u!114 &7843284556039852466
