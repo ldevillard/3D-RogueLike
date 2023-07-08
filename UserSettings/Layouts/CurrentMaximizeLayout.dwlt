@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 16973
+  controlID: 7060
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 16974
+  controlID: 7061
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 16975
+  controlID: 7062
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -225,9 +225,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: be8f0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 3c6ffdffc264feff0e74feff5475fefff0fdfeffac1effff3a75ffffae81ffffecfaffffa465010070b60100dab60100
+      m_ExpandedIDs: 4ae4ffff16fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -508,8 +508,8 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 1
-      snapOffset: {x: -231, y: -217}
+      displayed: 0
+      snapOffset: {x: -231, y: -197}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Scene View/Particles
@@ -525,9 +525,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.1810818, y: 3.5128784, z: 3.0414777}
+    m_Target: {x: 5.11337, y: -3.6887813, z: 8.162784}
     speed: 2
-    m_Value: {x: 1.1810818, y: 3.5128784, z: 3.0414777}
+    m_Value: {x: 5.11337, y: -3.6887813, z: 8.162784}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -574,13 +574,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.07138806, y: -0.9137733, z: 0.18362355, w: 0.35525143}
+    m_Target: {x: 0.31244934, y: 0.33854848, z: -0.12028984, w: 0.8793697}
     speed: 2
-    m_Value: {x: -0.071388096, y: 0.9137737, z: -0.18362364, w: -0.3552516}
+    m_Value: {x: -0.31244934, y: -0.33854848, z: 0.12028984, w: -0.87936974}
   m_Size:
-    m_Target: 7.614063
+    m_Target: 7.6264377
     speed: 2
-    m_Value: 7.614063
+    m_Value: 7.6264377
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -736,7 +736,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 17021
+  controlID: 6989
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -819,9 +819,9 @@ MonoBehaviour:
     m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 255}
-    m_SelectedIDs: a0b10000
-    m_LastClickedID: 45472
-    m_ExpandedIDs: 000000004ab1000000ca9a3bffffff7f
+    m_SelectedIDs: 3a850000
+    m_LastClickedID: 34106
+    m_ExpandedIDs: 00000000b884000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -849,7 +849,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004ab1000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000b884000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -874,8 +874,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: be8f0000
+    m_LastClickedInstanceID: 36798
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000faff0000a6990000022901004c3101001663000094fc01001afd00001efd0000521101001af00000fc8900002e140100
     m_RenameOverlay:
@@ -963,7 +963,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 96012
+  m_LastSelectedObjectID: -2298
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1031,22 +1031,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Rendering
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Rendering
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\logan\OneDrive\Desktop\Rogue Like
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 223}
-    m_SelectedIDs: 9cb10000
-    m_LastClickedID: 45468
-    m_ExpandedIDs: 000000004ab1000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: 34850000
+    m_LastClickedID: 34100
+    m_ExpandedIDs: 00000000b884000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1074,7 +1074,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004ab1000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000b884000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1099,8 +1099,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: be8f0000
+    m_LastClickedInstanceID: 36798
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:

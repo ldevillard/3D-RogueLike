@@ -11,9 +11,22 @@ public class LightFlash : MonoBehaviour
     public Ease ease = Ease.Linear;
     public float time = 0.5f;
 
+    Tween tween;
+
     void Start()
     {
-        DOTween.To(() => lightflash.range, x => lightflash.range = x, range.y, time)
+        if (lightflash == null)
+            lightflash = GetComponent<Light>();
+
+        if (lightflash == null)
+            Debug.LogError("LightFlash: No light component found!");
+
+        tween = DOTween.To(() => lightflash.range, x => lightflash.range = x, range.y, time)
         .From(range.x).SetLoops(-1, LoopType.Yoyo).SetEase(ease);
+    }
+
+    void OnDestroy()
+    {
+        tween.Kill();
     }
 }
