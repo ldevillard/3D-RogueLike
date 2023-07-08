@@ -7,11 +7,11 @@ public class DebugManager : MonoBehaviour
 {
     public KeyCode ResetKey;
 
-#if UNITY_EDITOR
+    // #if UNITY_EDITOR
     void Update()
     {
         if (Input.GetKeyDown(ResetKey))
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
-#endif
+    // #endif
 }
