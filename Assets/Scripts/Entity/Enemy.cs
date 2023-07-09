@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using System;
 using DG.Tweening;
 
-public abstract class Entity : MonoBehaviour, IEntity
+public abstract class Enemy : MonoBehaviour, IEntity
 {
     public Collider cl;
     public Flickerer flicker;
@@ -52,6 +52,8 @@ public abstract class Entity : MonoBehaviour, IEntity
         shakePos = Model.transform.DOShakePosition(0.2f, 0.5f);
         if (IsDead()) _Die();
     }
+
+    protected abstract void Attack();
 
     public void Die()
     {

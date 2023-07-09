@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IEntity
     float resetTimer;
     public Capacity[] CapacityPrefabs;
     [ReadOnly] public List<Capacity> Capacities = new List<Capacity>();
-    [ReadOnly] public Entity Target;
+    [ReadOnly] public Enemy Target;
 
     public int health;
     public int Health
@@ -246,12 +246,12 @@ public class PlayerController : MonoBehaviour, IEntity
     void UseCapacity()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-        Entity bestTarget = null;
+        Enemy bestTarget = null;
         float bestScore = -Mathf.Infinity; // Le score initial est défini à -Infini pour garantir que la première entité sera sélectionnée.
 
         foreach (Collider item in colliders)
         {
-            if (item.TryGetComponent<Entity>(out var e))
+            if (item.TryGetComponent<Enemy>(out var e))
             {
                 if (Vector2.Distance(transform.position, e.transform.position) > 1.5f)
                 {

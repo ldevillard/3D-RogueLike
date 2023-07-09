@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class DebugEntity : Entity
+public class DebugEntity : Enemy
 {
     [SerializeField] ParticleSystem deathParticles;
 
@@ -18,5 +18,9 @@ public class DebugEntity : Entity
             p.CleanPlay();
             Destroy(gameObject);
         });
+    }
+
+    protected override void Attack()
+    {
     }
 }

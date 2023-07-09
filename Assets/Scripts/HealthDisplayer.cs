@@ -9,7 +9,7 @@ using System;
 public class HealthDisplayer : MonoBehaviour
 {
     [SerializeField] Image fill;
-    [SerializeField] Entity entity;
+    [SerializeField] Enemy entity;
     [SerializeField] CanvasGroup preview;
 
     private void Start()

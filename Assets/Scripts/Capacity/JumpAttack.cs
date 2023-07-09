@@ -24,7 +24,7 @@ public class JumpAttack : Capacity
 
             foreach (var item in colliders)
             {
-                if (item.TryGetComponent<Entity>(out var e))
+                if (item.TryGetComponent<Enemy>(out var e))
                     e.Damage(data.damage);
             }
         });
