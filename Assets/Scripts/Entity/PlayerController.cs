@@ -5,15 +5,13 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System;
 
-public class PlayerController : MonoBehaviour, IEntity
+public class PlayerController : Entity
 {
     static public PlayerController Instance;
 
     PlayerControls controls;
 
     public Rigidbody Rb;
-    public Collider Cl;
-    public GameObject Model;
     public Animator Anim;
     public Camera cam;
     public float MovementSpeed;
@@ -39,23 +37,6 @@ public class PlayerController : MonoBehaviour, IEntity
     [ReadOnly] public List<Capacity> Capacities = new List<Capacity>();
     [ReadOnly] public Enemy Target;
 
-    public int health;
-    public int Health
-    {
-        get => health;
-        set => health = value;
-    }
-
-    public event Action<int, int> OnHealthChanged;
-    public event Action OnDie;
-
-    [ReadOnly] public int maxHealth;
-    public int MaxHealth
-    {
-        get => maxHealth;
-        set => maxHealth = value;
-    }
-
     Vector2 direction;
     bool move;
 
@@ -71,27 +52,17 @@ public class PlayerController : MonoBehaviour, IEntity
         controls.Gameplay.Attack.performed += ctx => Attack();
     }
 
-    void Start()
+    protected override void Start()
     {
         camDirection = (cam.transform.position - transform.position.SetY(cam.transform.position.y)).normalized;
-
         FetchCapacities();
+        base.Start();
     }
 
-    public void Damage(int damage)
+    protected override void Init()
     {
-        Health -= damage;
-        if (IsDead()) Die();
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
-
-    public bool IsDead()
-    {
-        return Health <= 0;
+        EntityManager.Instance.AddEntity(this);
+        base.Init();
     }
 
     public bool IsAttacking()
@@ -227,8 +198,8 @@ public class PlayerController : MonoBehaviour, IEntity
 
         // Debugging the field of view
         Vector3 forward = Model.transform.forward;
-        Vector3 right = Quaternion.Euler(0, 60, 0) * Model.transform.forward; // Rotate forward vector 45 degrees to the right
-        Vector3 left = Quaternion.Euler(0, -60, 0) * Model.transform.forward; // Rotate forward vector 45 degrees to the left
+        Vector3 right = Quaternion.Euler(0, 50, 0) * Model.transform.forward; // Rotate forward vector 45 degrees to the right
+        Vector3 left = Quaternion.Euler(0, -50, 0) * Model.transform.forward; // Rotate forward vector 45 degrees to the left
         Debug.DrawRay(transform.position, forward * detectionRadius, Color.blue); // Draw forward ray
         Debug.DrawRay(transform.position, right * detectionRadius, Color.green); // Draw right limit of FOV
         Debug.DrawRay(transform.position, left * detectionRadius, Color.green); // Draw left limit of FOV
@@ -259,7 +230,7 @@ public class PlayerController : MonoBehaviour, IEntity
                     float score = Vector3.Dot(Model.transform.forward, dirToEntity); // Calcul du score par produit scalaire
 
                     //field of view condition
-                    if (score > Mathf.Cos(60 * Mathf.Deg2Rad)) // cos(90/2) = 0
+                    if (score > Mathf.Cos(50 * Mathf.Deg2Rad)) // cos(90/2) = 0
                     {
                         if (score > bestScore) // Si le score actuel est meilleur que le meilleur score jusqu'à présent,
                         {

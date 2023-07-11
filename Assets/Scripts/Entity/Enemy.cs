@@ -5,69 +5,67 @@ using Sirenix.OdinInspector;
 using System;
 using DG.Tweening;
 
-public abstract class Enemy : MonoBehaviour, IEntity
+public abstract class Enemy : Entity
 {
-    public Collider cl;
-    public Flickerer flicker;
+    public NavMeshMovement movement;
+    [ReadOnly] public Entity Target;
 
-    public GameObject Model;
-
-    public int health;
-    public int Health
+    protected override void Init()
     {
-        get => health;
-        set => health = value;
-    }
-
-    public event Action<int, int> OnHealthChanged;
-    public event Action OnDie;
-
-    [ReadOnly] public int maxHealth;
-    public int MaxHealth
-    {
-        get => maxHealth;
-        set => maxHealth = value;
-    }
-
-    void Start()
-    {
-        Init();
-    }
-
-    protected virtual void Init()
-    {
-        MaxHealth = Health;
+        base.Init();
+        EntityManager.Instance.AddEnemy(this);
     }
 
     Tween shakePos;
-    public void Damage(int damage)
+    public override void Damage(int damage)
     {
-        int oldHealth = Health;
-        Health -= damage;
-        flicker.Flicker();
-
-        OnHealthChanged?.Invoke(oldHealth, Health);
-
         if (shakePos != null) shakePos.Kill(true);
         shakePos = Model.transform.DOShakePosition(0.2f, 0.5f);
-        if (IsDead()) _Die();
+
+        base.Damage(damage);
+    }
+
+    public override void Die()
+    {
+        EntityManager.Instance.RemoveEnemy(this);
+        if (shakePos != null) shakePos.Kill(true);
+        base.Die();
     }
 
     protected abstract void Attack();
 
-    public void Die()
+    protected virtual void Update()
     {
-        OnDie?.Invoke();
-        if (shakePos != null) shakePos.Kill(true);
+        if (IsDead()) return;
+        if (Target == null) Target = FindTarget();
     }
 
-    protected virtual void _Die()
+    void PickTarget()
     {
-        Die();
+        Entity target = FindTarget();
+        if (target != null)
+        {
+            Target = target;
+            movement.SetTarget(Target.transform);
+        }
     }
 
-    public bool IsDead()
+    Entity FindTarget()
     {
-        return Health <= 0;
+        Entity target = null;
+        foreach (Entity e in EntityManager.Instance.Entities)
+        {
+            if (target == null || Extender.Distance(e.transform.position, transform.position) < Extender.Distance(target.transform.position, transform.position))
+            {
+                target = e;
+            }
+        }
+        return target;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, movement.RangeDistance);
     }
 }

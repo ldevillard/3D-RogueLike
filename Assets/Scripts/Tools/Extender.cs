@@ -79,4 +79,9 @@ static public class Extender
         p.transform.SetParent(null);
         p.Play();
     }
+
+    public static float Distance(Vector3 pointA, Vector3 pointB)
+    {
+        return (pointA - pointB).sqrMagnitude;
+    }
 }

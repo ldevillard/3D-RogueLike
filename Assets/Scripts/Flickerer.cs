@@ -75,4 +75,10 @@ public class Flickerer : MonoBehaviour
     {
         s?.Kill(true);
     }
+
+    [Button("Fetch Renderers")]
+    public void FetchRenderers()
+    {
+        renderers = GetComponentsInChildren<Renderer>().ToList();
+    }
 }

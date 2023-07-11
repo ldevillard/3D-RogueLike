@@ -15,7 +15,7 @@ public class NavMeshBaker : MonoBehaviour
         MonoBehaviour[] allMonoBehaviours = FindObjectsOfType<MonoBehaviour>();
         foreach (MonoBehaviour monoBehaviour in allMonoBehaviours)
         {
-            if (monoBehaviour is IEntity)
+            if (monoBehaviour is Entity)
             {
                 entityObjects.Add(monoBehaviour.gameObject);
                 monoBehaviour.gameObject.SetActive(false);
