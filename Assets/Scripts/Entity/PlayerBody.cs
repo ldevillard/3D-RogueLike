@@ -12,4 +12,6 @@ public class PlayerBody
     public Transform leftFoot;
 
     public Transform head;
+
+    public Transform body;
 }

@@ -8,11 +8,15 @@ public class NavMeshMovement : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
     public float Speed;
+    public float MoveSpeedAnimationFactor = 1;
 
     public float RangeDistance;
     public float StopDistance;
 
     [ReadOnly] public Transform Target;
+
+    [ReadOnly] public bool isStopped;
+    [ReadOnly] public bool reachedTarget;
 
     void Start()
     {
@@ -24,25 +28,54 @@ public class NavMeshMovement : MonoBehaviour
     {
         Target = target;
 
+        if (!agent.enabled) return;
+
         SetDestination(target.position);
 
-        if (Vector3.Distance(transform.position, target.position) < RangeDistance)
+        float distance = Vector3.Distance(transform.position, Target.position);
+
+        if (distance < RangeDistance)
             Resume();
         else
             Stop();
+
+        if (distance < StopDistance)
+        {
+            reachedTarget = true;
+            Stop();
+        }
+        else
+            reachedTarget = false;
     }
 
     public void UpdatePostition()
     {
+        if (!agent.enabled) return;
         if (Target != null)
         {
             SetDestination(Target.position);
 
-            if (Vector3.Distance(transform.position, Target.position) < RangeDistance)
+            float distance = Vector3.Distance(transform.position, Target.position);
+
+            if (distance < RangeDistance)
                 Resume();
             else
                 Stop();
+
+            if (distance < StopDistance)
+            {
+                reachedTarget = true;
+                Stop();
+            }
+            else
+                reachedTarget = false;
         }
+        else
+        {
+            reachedTarget = false;
+            Stop();
+        }
+
     }
 
     public void SetDestination(Vector3 destination)
@@ -82,10 +115,12 @@ public class NavMeshMovement : MonoBehaviour
     public void Stop()
     {
         agent.isStopped = true;
+        isStopped = true;
     }
 
     public void Resume()
     {
         agent.isStopped = false;
+        isStopped = false;
     }
 }

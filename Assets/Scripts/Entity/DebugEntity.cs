@@ -5,7 +5,8 @@ using DG.Tweening;
 
 public class DebugEntity : Enemy
 {
-    protected override void Attack()
+    public override void MoveAnimationEvent()
     {
     }
+
 }

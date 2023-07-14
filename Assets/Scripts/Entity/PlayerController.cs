@@ -112,9 +112,11 @@ public class PlayerController : Entity
             Anim.Play("Dash");
             dashParticle.Play();
             trailParticle.Play();
+            cl.enabled = false;
             transform.DOMove(transform.position + Rb.velocity.normalized * 7.5f, 0.3f)
             .OnComplete(() =>
             {
+                cl.enabled = true;
                 dashParticle.Stop();
                 trailParticle.Stop();
                 if (longRun)
@@ -269,5 +271,15 @@ public class PlayerController : Entity
 
         Anim.Play("Capacity" + (attackCounter + 1));
         Capacities[attackCounter].Use();
+    }
+
+    public override Vector3 GetPosition()
+    {
+        return body.body.position;
+    }
+
+    public override void MoveAnimationEvent()
+    {
+
     }
 }

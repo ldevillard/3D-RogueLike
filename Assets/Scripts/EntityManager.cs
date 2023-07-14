@@ -44,14 +44,17 @@ public class EntityManager : MonoBehaviour
     {
         while (true)
         {
-            foreach (Enemy e in Enemies)
+            List<Enemy> tmp = new List<Enemy>(Enemies);
+            foreach (Enemy e in tmp)
             {
-                if (e.movement != null)
+                if (e == null) continue;
+                if (e.movement != null && !e.IsDead())
                 {
                     e.movement.UpdatePostition();
                     yield return new WaitForEndOfFrame();
                 }
             }
+            yield return new WaitForEndOfFrame();
         }
     }
 }

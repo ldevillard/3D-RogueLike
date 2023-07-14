@@ -9,11 +9,16 @@ public abstract class Enemy : Entity
 {
     public NavMeshMovement movement;
     [ReadOnly] public Entity Target;
+    public Animator Anim;
+
+    public Weapon weapon;
 
     protected override void Init()
     {
         base.Init();
+        if (weapon != null) weapon.entity = this;
         EntityManager.Instance.AddEnemy(this);
+        Anim.SetFloat("MoveSpeedFactor", movement.MoveSpeedAnimationFactor);
     }
 
     Tween shakePos;
@@ -32,12 +37,42 @@ public abstract class Enemy : Entity
         base.Die();
     }
 
-    protected abstract void Attack();
-
     protected virtual void Update()
     {
         if (IsDead()) return;
-        if (Target == null) Target = FindTarget();
+        if (Target == null) PickTarget();
+
+        if (Target != null)
+        {
+            if (weapon != null && weapon.IsAttacking)
+            {
+                movement.Stop();
+                return;
+            }
+            if (!movement.isStopped && !movement.reachedTarget)
+            {
+                Model.transform.rotation = Quaternion.Lerp(Model.transform.rotation, Quaternion.LookRotation(movement.GetVelocity()), Time.deltaTime * 20);
+                Anim.Play("Move");
+                weapon.UpdateCooldown();
+            }
+            else if (movement.reachedTarget)
+            {
+                Model.transform.rotation = Quaternion.Lerp(Model.transform.rotation, Quaternion.LookRotation(Target.transform.position - Model.transform.position), Time.deltaTime * 20);
+                Anim.SetTrigger("Idle");
+                //Check if the model is facing the target to attack it
+                if (Vector3.Angle(Model.transform.forward, Target.transform.position - Model.transform.position) < 10)
+                    weapon.TryUse();
+            }
+            else
+            {
+                Anim.Play("Idle");
+            }
+        }
+    }
+
+    public override void WeaponUsedCallback()
+    {
+        Anim.SetTrigger("Attack");
     }
 
     void PickTarget()
@@ -47,6 +82,7 @@ public abstract class Enemy : Entity
         {
             Target = target;
             movement.SetTarget(Target.transform);
+            weapon.SetTarget(Target);
         }
     }
 
@@ -68,4 +104,5 @@ public abstract class Enemy : Entity
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, movement.RangeDistance);
     }
+
 }

@@ -5,7 +5,7 @@ using System;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     public event Action<int, int> OnHealthChanged;
     public event Action OnDie;
@@ -39,6 +39,12 @@ public class Entity : MonoBehaviour
     protected virtual void Init()
     {
         MaxHealth = Health;
+
+        AnimatorEvents e = GetComponentInChildren<AnimatorEvents>();
+        if (e != null)
+        {
+            e.entity = this;
+        }
     }
 
     public bool IsDead()
@@ -68,4 +74,12 @@ public class Entity : MonoBehaviour
 
         if (IsDead()) Die();
     }
+
+    public virtual Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public abstract void MoveAnimationEvent();
+    public virtual void WeaponUsedCallback() { }
 }
