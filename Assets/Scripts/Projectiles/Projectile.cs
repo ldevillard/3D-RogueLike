@@ -9,6 +9,8 @@ public abstract class Projectile : MonoBehaviour
 
     int Damage;
 
+    protected float lifeTime = 5;
+
     [SerializeField] ParticleSystem impactParticle;
 
     public void Init(int damage)
@@ -19,13 +21,17 @@ public abstract class Projectile : MonoBehaviour
     void FixedUpdate()
     {
         Logic();
+        lifeTime -= Time.fixedDeltaTime;
+        if (lifeTime <= 0)
+            Destroy(gameObject);
     }
 
     protected abstract void Logic();
 
-    protected virtual void Impact(Entity e)
+    protected virtual void Impact(Entity e = null)
     {
-        e.Damage(Damage);
+        if (e != null)
+            e.Damage(Damage);
 
         if (impactParticle != null)
         {

@@ -25,7 +25,7 @@ public class ProjectileWeapon : Weapon
     {
         Projectile p = Instantiate(ProjectilePrefab, transform.position, transform.rotation);
         p.Init(Damage);
-        if (target != null && Vector3.Angle(entity.Model.transform.forward, target.GetPosition() - transform.position) < 30)
+        if (target != null && Vector3.Angle(entity.Model.transform.forward, target.GetPosition() - transform.position) < 15)
             p.transform.forward = (target.GetPosition() - transform.position).normalized;
         else
             p.transform.forward = entity.Model.transform.forward;

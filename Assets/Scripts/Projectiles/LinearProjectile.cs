@@ -14,6 +14,7 @@ public class LinearProjectile : Projectile
             {
                 Impact(e);
             }
+            Impact();
         }
 
         transform.position += transform.forward * Speed * Time.fixedDeltaTime;

@@ -278,6 +278,22 @@ public class PlayerController : Entity
         return body.body.position;
     }
 
+    public override void Die()
+    {
+        EntityManager.Instance.RemoveEntity(this);
+        if (shakePos != null) shakePos.Kill(true);
+        base.Die();
+    }
+
+    Tween shakePos;
+    public override void Damage(int damage)
+    {
+        CameraController.Instance.Shake(0.2f, 0.4f);
+        if (shakePos != null) shakePos.Kill(true);
+        shakePos = Model.transform.DOShakePosition(0.2f, 0.5f);
+        base.Damage(damage);
+    }
+
     public override void MoveAnimationEvent()
     {
 
