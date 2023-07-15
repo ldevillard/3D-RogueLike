@@ -16,10 +16,14 @@ public class Flickerer : MonoBehaviour
     protected Dictionary<Renderer, Material[]> materialDico = new Dictionary<Renderer, Material[]>();
     public Sequence s;
 
+    [ReadOnly] public QuickOutline outline;
+
     protected virtual void Awake()
     {
         renderers = renderers.Where(x => x != null).ToList();
         UpdateRenderers();
+
+        outline = GetComponentInChildren<QuickOutline>();
     }
 
     public virtual void UpdateRenderers()
@@ -63,6 +67,9 @@ public class Flickerer : MonoBehaviour
         {
             item.Key.sharedMaterials = item.Value;
         }
+
+        if (outline != null)
+            outline.needsUpdate = true;
     }
 
     private void OnDisable()

@@ -10,6 +10,7 @@ public abstract class Capacity : MonoBehaviour
     public CapacityData data;
 
     [ReadOnly] public bool InUse;
+    [ReadOnly] public bool InCooldown;
 
     protected PlayerController player;
 
@@ -18,7 +19,23 @@ public abstract class Capacity : MonoBehaviour
         player = PlayerController.Instance;
     }
 
-    public abstract void Use();
+    public virtual void Use()
+    {
+        InUse = true;
+        StartCoroutine(DurationCoroutine());
+        InCooldown = true;
+        StartCoroutine(CooldownCoroutine());
+    }
 
-    protected abstract IEnumerator DurationCoroutine();
+    protected virtual IEnumerator DurationCoroutine()
+    {
+        yield return new WaitForSeconds(data.duration);
+        InUse = false;
+    }
+
+    protected virtual IEnumerator CooldownCoroutine()
+    {
+        yield return new WaitForSeconds(data.cooldown);
+        InCooldown = false;
+    }
 }

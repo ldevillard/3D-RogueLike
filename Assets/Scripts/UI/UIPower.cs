@@ -30,8 +30,10 @@ public class UIPower : MonoBehaviour
                 PlayerController.OnDash += EventCallback;
                 break;
             case UIPowerType.Attack:
+                PlayerController.OnAttack += FeedbackCallback;
                 break;
             case UIPowerType.Special1:
+                PlayerController.OnSpecial1 += EventCallback;
                 break;
             case UIPowerType.Special2:
                 break;
@@ -40,26 +42,38 @@ public class UIPower : MonoBehaviour
         }
     }
 
+
+    Tween punchTween;
     void EventCallback(float time)
     {
         mask.fillAmount = 1;
         mask.DOFillAmount(0, time).SetEase(Ease.Linear)
         .OnComplete(() =>
         {
-            rect.DOPunchScale(Vector3.one * 0.2f, 0.2f);
+            punchTween = rect.DOPunchScale(Vector3.one * 0.2f, 0.2f);
         });
+    }
+
+    void FeedbackCallback()
+    {
+        punchTween = rect.DOPunchScale(Vector3.one * 0.2f, 0.2f);
     }
 
     void OnDestroy()
     {
+        if (punchTween != null)
+            punchTween.Kill();
+
         switch (Type)
         {
             case UIPowerType.Dash:
                 PlayerController.OnDash -= EventCallback;
                 break;
             case UIPowerType.Attack:
+                PlayerController.OnAttack -= FeedbackCallback;
                 break;
             case UIPowerType.Special1:
+                PlayerController.OnSpecial1 -= EventCallback;
                 break;
             case UIPowerType.Special2:
                 break;

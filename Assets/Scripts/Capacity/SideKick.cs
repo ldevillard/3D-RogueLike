@@ -9,7 +9,7 @@ public class SideKick : Capacity
 
     public override void Use()
     {
-        InUse = true;
+        base.Use();
         player.DamageTarget(data.damage);
         DOVirtual.DelayedCall(0.15f, () =>
         {
@@ -17,12 +17,5 @@ public class SideKick : Capacity
             p.transform.localScale /= 2;
             p.CleanPlay();
         });
-        StartCoroutine(DurationCoroutine());
-    }
-
-    protected override IEnumerator DurationCoroutine()
-    {
-        yield return new WaitForSeconds(data.duration);
-        InUse = false;
     }
 }

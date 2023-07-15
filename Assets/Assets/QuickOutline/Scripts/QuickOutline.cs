@@ -87,7 +87,7 @@ public class QuickOutline : MonoBehaviour
     private Material outlineMaskMaterial;
     private Material outlineFillMaterial;
 
-    private bool needsUpdate;
+    public bool needsUpdate;
 
     void Awake()
     {
@@ -150,7 +150,18 @@ public class QuickOutline : MonoBehaviour
         if (needsUpdate)
         {
             needsUpdate = false;
+            foreach (var renderer in renderers)
+            {
+                if (renderer.gameObject.CompareTag("IgnoreOutline"))
+                    continue;
+                // Append outline shaders
+                var materials = renderer.sharedMaterials.ToList();
 
+                materials.Add(outlineMaskMaterial);
+                materials.Add(outlineFillMaterial);
+
+                renderer.materials = materials.ToArray();
+            }
             UpdateMaterialProperties();
         }
     }

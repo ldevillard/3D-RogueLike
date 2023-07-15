@@ -7,8 +7,7 @@ public class RotateJump : Capacity
 {
     public override void Use()
     {
-        InUse = true;
-        StartCoroutine(DurationCoroutine());
+        base.Use();
 
         player.transform.DOJump(transform.position, 1, 1, 0.4f)
         .OnComplete(() =>
@@ -17,9 +16,4 @@ public class RotateJump : Capacity
         });
     }
 
-    protected override IEnumerator DurationCoroutine()
-    {
-        yield return new WaitForSeconds(data.duration);
-        InUse = false;
-    }
 }

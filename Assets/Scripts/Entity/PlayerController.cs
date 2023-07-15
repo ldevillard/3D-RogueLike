@@ -30,16 +30,27 @@ public class PlayerController : Entity
 
     //DASH
     static public event Action<float> OnDash;
-    public float DashCooldown = 0.5f;
+    public float DashCooldown = 0.75f;
+    public int numberOfDash = 2;
+    int dashCounter;
 
     //ATTACKS
+    static public event Action OnAttack;
     public float detectionRadius = 5;
     int attackCounter;
     float resetTime = 0.5f;
     float resetTimer;
+
+    //CAPACITIES
+    //3 first capacities are the 3 basic attack combo
+    //4 and 5 are the 2 special capacities
     public Capacity[] CapacityPrefabs;
     [ReadOnly] public List<Capacity> Capacities = new List<Capacity>();
     [ReadOnly] public Enemy Target;
+
+    //SPECIAL CAPACITIES EVENTS
+    static public event Action<float> OnSpecial1;
+    static public event Action<float> OnSpecial2;
 
     Vector2 direction;
     bool move;
@@ -54,12 +65,14 @@ public class PlayerController : Entity
         controls.Gameplay.Move.canceled += ctx => direction = Vector2.zero;
         controls.Gameplay.Dash.performed += ctx => Dash();
         controls.Gameplay.Attack.performed += ctx => Attack();
+        controls.Gameplay.Special1.performed += ctx => Special1();
     }
 
     protected override void Start()
     {
         camDirection = (cam.transform.position - transform.position.SetY(cam.transform.position.y)).normalized;
         FetchCapacities();
+        dashCounter = numberOfDash;
         base.Start();
     }
 
@@ -112,20 +125,29 @@ public class PlayerController : Entity
         if (IsAttacking())
             return;
 
-        if (dashTimer > 0)
+        if (dashTimer > 0 && dashCounter == 0)
             return;
+        else if (dashTimer <= 0)
+            dashCounter = numberOfDash;
 
         if (move)
         {
+            dashCounter--;
+
+            dashTimer = DashCooldown;
+            if (dashCounter == 0)
+            {
+                OnDash?.Invoke(DashCooldown);
+            }
+
             Anim.Play("Dash");
             dashParticle.Play();
             trailParticle.Play();
             cl.enabled = false;
+
             transform.DOMove(transform.position + Rb.velocity.normalized * 7.5f, 0.3f)
             .OnComplete(() =>
             {
-                dashTimer = DashCooldown;
-                OnDash?.Invoke(DashCooldown);
                 cl.enabled = true;
                 dashParticle.Stop();
                 trailParticle.Stop();
@@ -144,7 +166,7 @@ public class PlayerController : Entity
 
         if (attackCounter < 3)
         {
-            UseCapacity();
+            UseCapacityAttack();
 
             attackCounter++;
             resetTimer = resetTime;
@@ -154,6 +176,15 @@ public class PlayerController : Entity
             attackCounter = 0;
             resetTimer = resetTime;
         }
+    }
+
+    void Special1()
+    {
+        if (IsAttacking() || Capacities[3].InCooldown)
+            return;
+
+        UseCapacitySpecial(3);
+        OnSpecial1?.Invoke(Capacities[3].data.cooldown);
     }
 
     void Update()
@@ -229,7 +260,28 @@ public class PlayerController : Entity
         }
     }
 
-    void UseCapacity()
+    void UseCapacityAttack()
+    {
+        PickTarget(true);
+
+        Rb.velocity = Vector3.zero;
+
+        Anim.Play("Capacity" + (attackCounter + 1));
+        Capacities[attackCounter].Use();
+        OnAttack?.Invoke();
+    }
+
+    void UseCapacitySpecial(int idx)
+    {
+        PickTarget(false, true, 180);
+
+        Rb.velocity = Vector3.zero;
+
+        Anim.Play("Capacity" + (idx + 1));
+        Capacities[idx].Use();
+    }
+
+    void PickTarget(bool dash = false, bool aim = false, float angle = 100f)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
         Enemy bestTarget = null;
@@ -245,7 +297,7 @@ public class PlayerController : Entity
                     float score = Vector3.Dot(Model.transform.forward, dirToEntity); // Calcul du score par produit scalaire
 
                     //field of view condition
-                    if (score > Mathf.Cos(50 * Mathf.Deg2Rad)) // cos(90/2) = 0
+                    if (score > Mathf.Cos((angle / 2) * Mathf.Deg2Rad)) // cos(90/2) = 0
                     {
                         if (score > bestScore) // Si le score actuel est meilleur que le meilleur score jusqu'à présent,
                         {
@@ -263,7 +315,7 @@ public class PlayerController : Entity
         }
 
         Target = bestTarget;
-        if (Target != null)
+        if (Target != null && dash)
         {
             Vector3 dir = (Target.transform.position - transform.position).normalized.SetY(0);
             Model.transform.rotation = Quaternion.LookRotation(dir);
@@ -280,10 +332,11 @@ public class PlayerController : Entity
             });
         }
 
-        Rb.velocity = Vector3.zero;
-
-        Anim.Play("Capacity" + (attackCounter + 1));
-        Capacities[attackCounter].Use();
+        if (Target != null && aim)
+        {
+            Vector3 dir = (Target.transform.position - transform.position).normalized.SetY(0);
+            Model.transform.rotation = Quaternion.LookRotation(dir);
+        }
     }
 
     public override Vector3 GetPosition()

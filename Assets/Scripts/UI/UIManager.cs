@@ -9,8 +9,6 @@ public class UIManager : MonoBehaviour
 
     public UIPowers PowerSection;
 
-    public Ease ease;
-
     void Awake()
     {
         Instance = this;

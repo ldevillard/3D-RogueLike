@@ -10,8 +10,7 @@ public class JumpAttack : Capacity
 
     public override void Use()
     {
-        InUse = true;
-        StartCoroutine(DurationCoroutine());
+        base.Use();
 
         DOVirtual.DelayedCall(0.5f, () =>
         {
