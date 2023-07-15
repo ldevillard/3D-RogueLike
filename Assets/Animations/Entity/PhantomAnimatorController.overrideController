@@ -6,14 +6,14 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlowerPotAnimatorController
+  m_Name: PhantomAnimatorController
   m_Controller: {fileID: 9100000, guid: bc19ccdcfc777484e96ed4ae08303a60, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 5ad01fefe87a47841951ec0a3345baa0, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: 210ac98c5c5981e4e8fdf8536fecf462, type: 3}
-  - m_OriginalClip: {fileID: 7400000, guid: c5f3b38561970604dbf39f5dabff5f66, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: a99a5c00186d8e54490f1bdf85a60e36, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: c2f2114aba1ff07409c81983573154ea, type: 3}
   - m_OriginalClip: {fileID: 7400000, guid: f50b2a74065e11f4e80f030809aa1560, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: f7a3f1a83c373aa4d9007ebf6d8c14e3, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: deacb952f444d244d94877adf9e88da8, type: 3}
   - m_OriginalClip: {fileID: 7400000, guid: 405b752c1fa5f43ccbf49c1847eebeb1, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: f359c6f726e0ae9469e43d508d3bac63, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: cac9f6803dfe21e4492309c42513da25, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: c5f3b38561970604dbf39f5dabff5f66, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 07dc8f91d01fe6444880aab5d5acfc3f, type: 3}

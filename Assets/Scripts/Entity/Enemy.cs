@@ -34,6 +34,7 @@ public abstract class Enemy : Entity
     {
         EntityManager.Instance.RemoveEnemy(this);
         if (shakePos != null) shakePos.Kill(true);
+        Anim.Play("Die");
         base.Die();
     }
 
@@ -52,15 +53,16 @@ public abstract class Enemy : Entity
             if (!movement.isStopped && !movement.reachedTarget)
             {
                 Model.transform.rotation = Quaternion.Lerp(Model.transform.rotation, Quaternion.LookRotation(movement.GetVelocity()), Time.deltaTime * 20);
-                Anim.Play("Move");
-                weapon.UpdateCooldown();
+                Anim.SetTrigger("Move");
+                if (weapon != null)
+                    weapon.UpdateCooldown();
             }
             else if (movement.reachedTarget)
             {
                 Model.transform.rotation = Quaternion.Lerp(Model.transform.rotation, Quaternion.LookRotation(Target.transform.position - Model.transform.position), Time.deltaTime * 20);
                 Anim.SetTrigger("Idle");
                 //Check if the model is facing the target to attack it
-                if (Vector3.Angle(Model.transform.forward, Target.transform.position - Model.transform.position) < 10)
+                if (Vector3.Angle(Model.transform.forward, Target.transform.position - Model.transform.position) < 10 && weapon != null)
                     weapon.TryUse();
             }
             else
@@ -82,7 +84,8 @@ public abstract class Enemy : Entity
         {
             Target = target;
             movement.SetTarget(Target.transform);
-            weapon.SetTarget(Target);
+            if (weapon != null)
+                weapon.SetTarget(Target);
         }
     }
 
@@ -101,8 +104,21 @@ public abstract class Enemy : Entity
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, movement.RangeDistance);
+        if (movement != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, movement.RangeDistance);
+        }
+    }
+
+    [Button("Fetch Components")]
+    public override void FetchComponents()
+    {
+        base.FetchComponents();
+        movement = GetComponent<NavMeshMovement>();
+        Anim = GetComponentInChildren<Animator>();
+        weapon = GetComponentInChildren<Weapon>();
+        movement.SetAgent(GetComponent<UnityEngine.AI.NavMeshAgent>());
     }
 
 }

@@ -494,6 +494,7 @@ MonoBehaviour:
   - {fileID: 7498897315865146647, guid: f1d61288e8ddccc4fafec5395df1e300, type: 3}
   - {fileID: 8763062475364349640, guid: 23a56d3a63c02594795ba1060314aa5b, type: 3}
   - {fileID: 1011097424374772186, guid: 07eacac026b614aa5822e16f293c4713, type: 3}
+  - {fileID: 3363477391884335871, guid: 1284bab13611847b5a9b7ad880df0444, type: 3}
   Capacities: []
   Target: {fileID: 0}
 --- !u!114 &8934298545797093989
@@ -521,6 +522,7 @@ MonoBehaviour:
   - {fileID: 1078683684131204468}
   - {fileID: 4329478482555752360}
   - {fileID: 8547968063592265406}
+  outline: {fileID: 0}
 --- !u!54 &4683075885441402088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2484,6 +2486,7 @@ MonoBehaviour:
     - {x: 0.6726975, y: -0.00000012632783, z: -0.73991764}
     - {x: 1, y: 0, z: 0.00000033178875}
     - {x: 1, y: 0, z: 0.00000036411933}
+  needsUpdate: 1
 --- !u!1 &4712722745380129799
 GameObject:
   m_ObjectHideFlags: 0

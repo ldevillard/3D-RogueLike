@@ -5,11 +5,12 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using Sirenix.OdinInspector;
 
 public class HealthDisplayer : MonoBehaviour
 {
     [SerializeField] Image fill;
-    [SerializeField] Enemy entity;
+    [SerializeField] Entity entity;
     [SerializeField] CanvasGroup preview;
 
     private void Start()
@@ -52,7 +53,7 @@ public class HealthDisplayer : MonoBehaviour
         fill.DOFillAmount(newHealthPct, 0.2f).SetEase(Ease.OutBack);
     }
 
-    void HandleDie()
+    void HandleDie(Entity e)
     {
         Hide(() => Destroy(gameObject));
     }
@@ -69,5 +70,11 @@ public class HealthDisplayer : MonoBehaviour
         preview.DOKill();
         preview.DOFade(0, 0.25f)
         .OnComplete(() => onComplete?.Invoke());
+    }
+
+    [Button("Fetch Entity")]
+    public void FetchEntity()
+    {
+        entity = GetComponentInParent<Entity>();
     }
 }

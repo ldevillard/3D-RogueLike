@@ -6,6 +6,7 @@ TagManager:
   tags:
   - IgnoreOutline
   - Missile
+  - Bounds
   layers:
   - Default
   - TransparentFX

@@ -20,9 +20,12 @@ public class UIPower : MonoBehaviour
     public Image mask;
     public RectTransform rect;
 
+    Vector3 startScale;
+
     public void Init()
     {
         mask.fillAmount = 0;
+        startScale = rect.localScale;
 
         switch (Type)
         {
@@ -36,6 +39,7 @@ public class UIPower : MonoBehaviour
                 PlayerController.OnSpecial1 += EventCallback;
                 break;
             case UIPowerType.Special2:
+                PlayerController.OnSpecial2 += EventCallback;
                 break;
             default:
                 break;
@@ -47,6 +51,13 @@ public class UIPower : MonoBehaviour
     void EventCallback(float time)
     {
         mask.fillAmount = 1;
+
+        if (punchTween != null)
+        {
+            punchTween.Kill(true);
+            rect.localScale = startScale;
+        }
+
         mask.DOFillAmount(0, time).SetEase(Ease.Linear)
         .OnComplete(() =>
         {
@@ -76,6 +87,7 @@ public class UIPower : MonoBehaviour
                 PlayerController.OnSpecial1 -= EventCallback;
                 break;
             case UIPowerType.Special2:
+                PlayerController.OnSpecial2 -= EventCallback;
                 break;
             default:
                 break;

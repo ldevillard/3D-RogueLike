@@ -123,4 +123,9 @@ public class NavMeshMovement : MonoBehaviour
         agent.isStopped = false;
         isStopped = false;
     }
+
+    public void SetAgent(NavMeshAgent a)
+    {
+        agent = a;
+    }
 }

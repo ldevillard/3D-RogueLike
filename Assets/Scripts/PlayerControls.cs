@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Special2"",
+                    ""type"": ""Button"",
+                    ""id"": ""81436e7f-6674-4e9b-bb5e-9d33d040e894"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -233,11 +242,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9ef57095-9f17-499d-b103-1dc2e32aaaf4"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Special1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74fca7b0-16ed-4a27-b0f5-fca53ed99587"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee1053e5-4a7e-41ce-8526-129bad84243e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -252,6 +283,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_Special1 = m_Gameplay.FindAction("Special1", throwIfNotFound: true);
+        m_Gameplay_Special2 = m_Gameplay.FindAction("Special2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +349,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Dash;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_Special1;
+    private readonly InputAction m_Gameplay_Special2;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -325,6 +358,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @Special1 => m_Wrapper.m_Gameplay_Special1;
+        public InputAction @Special2 => m_Wrapper.m_Gameplay_Special2;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -346,6 +380,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Special1.started += instance.OnSpecial1;
             @Special1.performed += instance.OnSpecial1;
             @Special1.canceled += instance.OnSpecial1;
+            @Special2.started += instance.OnSpecial2;
+            @Special2.performed += instance.OnSpecial2;
+            @Special2.canceled += instance.OnSpecial2;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -362,6 +399,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Special1.started -= instance.OnSpecial1;
             @Special1.performed -= instance.OnSpecial1;
             @Special1.canceled -= instance.OnSpecial1;
+            @Special2.started -= instance.OnSpecial2;
+            @Special2.performed -= instance.OnSpecial2;
+            @Special2.canceled -= instance.OnSpecial2;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -385,5 +425,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSpecial1(InputAction.CallbackContext context);
+        void OnSpecial2(InputAction.CallbackContext context);
     }
 }

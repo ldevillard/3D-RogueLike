@@ -66,6 +66,7 @@ public class PlayerController : Entity
         controls.Gameplay.Dash.performed += ctx => Dash();
         controls.Gameplay.Attack.performed += ctx => Attack();
         controls.Gameplay.Special1.performed += ctx => Special1();
+        controls.Gameplay.Special2.performed += ctx => Special2();
     }
 
     protected override void Start()
@@ -122,8 +123,15 @@ public class PlayerController : Entity
     float dashTimer;
     void Dash()
     {
-        if (IsAttacking())
-            return;
+        // if (IsAttacking())
+        //     return;
+
+        Vector3 dashPoint = transform.position + Rb.velocity.SetY(0).normalized * 7.5f;
+        if (Physics.Raycast(body.body.transform.position, Rb.velocity.SetY(0), out RaycastHit hit, 7.5f))
+        {
+            if (hit.collider.CompareTag("Bounds"))
+                dashPoint = hit.point;
+        }
 
         if (dashTimer > 0 && dashCounter == 0)
             return;
@@ -145,7 +153,7 @@ public class PlayerController : Entity
             trailParticle.Play();
             cl.enabled = false;
 
-            transform.DOMove(transform.position + Rb.velocity.normalized * 7.5f, 0.3f)
+            transform.DOMove(dashPoint, 0.3f)
             .OnComplete(() =>
             {
                 cl.enabled = true;
@@ -185,6 +193,15 @@ public class PlayerController : Entity
 
         UseCapacitySpecial(3);
         OnSpecial1?.Invoke(Capacities[3].data.cooldown);
+    }
+
+    void Special2()
+    {
+        if (IsAttacking() || Capacities[4].InCooldown)
+            return;
+
+        UseCapacitySpecial(4);
+        OnSpecial2?.Invoke(Capacities[4].data.cooldown);
     }
 
     void Update()

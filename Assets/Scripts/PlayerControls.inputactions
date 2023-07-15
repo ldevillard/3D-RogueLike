@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Special2",
+                    "type": "Button",
+                    "id": "81436e7f-6674-4e9b-bb5e-9d33d040e894",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -211,11 +220,33 @@
                 {
                     "name": "",
                     "id": "9ef57095-9f17-499d-b103-1dc2e32aaaf4",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Special1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74fca7b0-16ed-4a27-b0f5-fca53ed99587",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee1053e5-4a7e-41ce-8526-129bad84243e",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -8,7 +8,7 @@ using DG.Tweening;
 public abstract class Entity : MonoBehaviour
 {
     public event Action<int, int> OnHealthChanged;
-    public event Action OnDie;
+    public event Action<Entity> OnDie;
 
     public Collider cl;
     public Flickerer flicker;
@@ -54,12 +54,18 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void Die()
     {
-        OnDie?.Invoke();
-        Model.transform.DOScale(0, 0.3f).SetEase(Ease.InBack)
+        OnDie?.Invoke(this);
+        cl.enabled = false;
+        Model.transform.DOScale(0, 0.5f).SetEase(Ease.InBack)
         .OnComplete(() =>
         {
-            ParticleSystem p = Instantiate(deathParticles, transform.position, deathParticles.transform.rotation);
-            p.CleanPlay();
+            if (deathParticles != null)
+            {
+                ParticleSystem p = Instantiate(deathParticles, transform.position, deathParticles.transform.rotation);
+                p.CleanPlay();
+            }
+            else
+                Debug.LogWarning("No death particles on " + gameObject.name);
             Destroy(gameObject);
         });
     }
@@ -82,4 +88,12 @@ public abstract class Entity : MonoBehaviour
 
     public abstract void MoveAnimationEvent();
     public virtual void WeaponUsedCallback() { }
+
+    [Button("Fetch Components")]
+    public virtual void FetchComponents()
+    {
+        cl = GetComponent<Collider>();
+        flicker = GetComponent<Flickerer>();
+        Model = GetComponentInChildren<Animator>().gameObject;
+    }
 }
