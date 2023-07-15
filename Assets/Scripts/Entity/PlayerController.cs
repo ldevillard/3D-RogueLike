@@ -28,6 +28,10 @@ public class PlayerController : Entity
     public ParticleSystem dashParticle;
     public ParticleSystem trailParticle;
 
+    //DASH
+    static public event Action<float> OnDash;
+    public float DashCooldown = 0.5f;
+
     //ATTACKS
     public float detectionRadius = 5;
     int attackCounter;
@@ -102,9 +106,13 @@ public class PlayerController : Entity
         controls.Gameplay.Disable();
     }
 
+    float dashTimer;
     void Dash()
     {
         if (IsAttacking())
+            return;
+
+        if (dashTimer > 0)
             return;
 
         if (move)
@@ -116,6 +124,8 @@ public class PlayerController : Entity
             transform.DOMove(transform.position + Rb.velocity.normalized * 7.5f, 0.3f)
             .OnComplete(() =>
             {
+                dashTimer = DashCooldown;
+                OnDash?.Invoke(DashCooldown);
                 cl.enabled = true;
                 dashParticle.Stop();
                 trailParticle.Stop();
@@ -148,6 +158,9 @@ public class PlayerController : Entity
 
     void Update()
     {
+        if (dashTimer > 0)
+            dashTimer -= Time.deltaTime;
+
         if (IsAttacking())
             return;
 
