@@ -10,6 +10,8 @@ public class LinearProjectile : Projectile
     public bool SphereCast = false;
     [ShowIf("SphereCast")] public float Radius = 0.25f;
 
+    bool isControlled; //All us to control the projectile before throwing it
+
     void Start()
     {
         DetectionStep = Speed * Time.fixedDeltaTime;
@@ -17,6 +19,7 @@ public class LinearProjectile : Projectile
 
     protected override void Logic()
     {
+        if (isControlled) return;
         if (SphereCast)
         {
             if (Physics.SphereCast(transform.position, Radius, transform.forward, out RaycastHit hit, DetectionStep, targetMask))
@@ -41,6 +44,16 @@ public class LinearProjectile : Projectile
         }
 
         transform.position += transform.forward * Speed * Time.fixedDeltaTime;
+    }
+
+    public void Control()
+    {
+        isControlled = true;
+    }
+
+    public void Throw()
+    {
+        isControlled = false;
     }
 
     void OnDrawGizmos()
