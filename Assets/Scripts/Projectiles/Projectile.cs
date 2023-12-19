@@ -64,9 +64,10 @@ public abstract class Projectile : MonoBehaviour
         Destroy(gameObject, 0.5f);
     }
 
+    Tween arcLaunchTween;
     public void ArcLaunch(Transform target, float duration, float delay)
     {
-        DOVirtual.DelayedCall(delay, () =>
+        arcLaunchTween = DOVirtual.DelayedCall(delay, () =>
         {
             transform.SetParent(null);
             Vector3[] path;
@@ -100,5 +101,10 @@ public abstract class Projectile : MonoBehaviour
             .OnComplete(() => Impact());
 
         });
+    }
+
+    void OnDestroy()
+    {
+        arcLaunchTween.Kill();
     }
 }

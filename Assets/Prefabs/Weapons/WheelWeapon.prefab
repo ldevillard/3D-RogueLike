@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 489017656089044399}
   - component: {fileID: 7685054161327326209}
+  - component: {fileID: 2107081484211573629}
   m_Layer: 0
   m_Name: WheelWeapon
   m_TagString: Untagged
@@ -54,3 +55,18 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 115331107129370925, guid: abf99ee8c92e249b8b53d16447b969fa, type: 3}
   ProjectileCount: 5
   wheelRadius: 1
+--- !u!114 &2107081484211573629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7922541001200826208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69a5062fba354d8ca759f9239ff337e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 100
+  Axis: {x: 0, y: 360, z: 0}
+  Local: 1

@@ -17,6 +17,13 @@ public abstract class Weapon : MonoBehaviour
 
     [ReadOnly] public bool IsAttacking;
 
+    public void Setup(Entity e)
+    {
+        entity = e;
+        if (entity != null)
+            entity.OnDie += OnEntityDie;
+    }
+
     public void TryUse()
     {
         if (IsAttacking) return;
@@ -49,5 +56,16 @@ public abstract class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(AttackDuration);
         IsAttacking = false;
+    }
+
+    protected virtual void OnEntityDie(Entity e)
+    {
+
+    }
+
+    void OnDestroy()
+    {
+        if (entity != null)
+            entity.OnDie -= OnEntityDie;
     }
 }

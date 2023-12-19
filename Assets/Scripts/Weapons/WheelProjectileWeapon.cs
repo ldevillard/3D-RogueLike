@@ -9,6 +9,8 @@ public class WheelProjectileWeapon : Weapon
     public int ProjectileCount;
     public float wheelRadius;
 
+    List<Projectile> projectilePool = new List<Projectile>();
+
     protected override void Use()
     {
         base.Use();
@@ -20,11 +22,12 @@ public class WheelProjectileWeapon : Weapon
 
     void SpawnWheel()
     {
-        transform.DORotate(new Vector3(0, 360, 0), 1f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
         Vector3 tempPos = transform.position;
+        projectilePool.Clear();
         for (int i = 0; i < ProjectileCount; i++)
         {
             LinearProjectile p = Instantiate(ProjectilePrefab, tempPos, ProjectilePrefab.transform.rotation);
+            projectilePool.Add(p);
             p.transform.parent = transform;
             p.transform.position -= Vector3.back;
             p.transform.localScale = Vector3.zero;
@@ -36,6 +39,17 @@ public class WheelProjectileWeapon : Weapon
             p.transform.DOScale(1, 0.5f).SetEase(Ease.OutSine);
             p.Control();
             p.ArcLaunch(target.transform, 0.3f, 2f + i * 0.1f);
+        }
+    }
+
+    protected override void OnEntityDie(Entity e)
+    {
+        base.OnEntityDie(e);
+
+        foreach (var p in projectilePool)
+        {
+            if (p != null)
+                p.transform.SetParent(null);
         }
     }
 

@@ -16,7 +16,7 @@ public abstract class Enemy : Entity
     protected override void Init()
     {
         base.Init();
-        if (weapon != null) weapon.entity = this;
+        if (weapon != null) weapon.Setup(this);
         EntityManager.Instance.AddEnemy(this);
         Anim.SetFloat("MoveSpeedFactor", movement.MoveSpeedAnimationFactor);
     }
